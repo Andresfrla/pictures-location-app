@@ -25,7 +25,7 @@ export default PlacesList;
 
 const styles = StyleSheet.create({
   fallbackContainer: {
-    flex: 1,
+    flex: 1,A
     justifyContent: "center",
     alignItems: "center",
   },
