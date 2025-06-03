@@ -1,9 +1,38 @@
-import { StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import OutlineButton from "../UI/OutlineButton";
 import { Colors } from "../../constants/colors";
+import { getCurrentPositionAsync, PermissionStatus, useForegroundPermissions } from "expo-location";
 
 function LocationPicker() {
-  function getLocationHandler() {}
+    const [locationPermissionInformation, requestPermission] = useForegroundPermissions();
+
+    async function verifyPermission (){
+         if (locationPermissionInformation.status === PermissionStatus.UNDETERMINED) {
+              const permissionResponse = await requestPermission();
+              return permissionResponse.granted;
+            }
+        
+            if (locationPermissionInformation.status === PermissionStatus.DENIED) {
+              Alert.alert(
+                "Insufficient Permissions!",
+                "You need to grant location permissions to use this app."
+              );
+              return false;
+            }
+        
+            return true;
+    }
+
+  async function getLocationHandler() {
+    const hasPermission = await verifyPermission();
+
+    if(!hasPermission){
+        return; 
+    }
+
+    const location = await getCurrentPositionAsync();
+    console.log(location);
+  }
 
   function pickOnMapHandler() {}
 
@@ -37,6 +66,6 @@ const styles = StyleSheet.create({
   actions: {
     flexDirection: "row",
     justifyContent: "space-around",
-    alignItems: "center"
+    alignItems: "center",
   },
 });
