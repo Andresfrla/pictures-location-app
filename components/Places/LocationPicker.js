@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import getMapPreview from "../../util/location";
 import { useNavigation, useRoute, useIsFocused } from "@react-navigation/native";
 
-function LocationPicker() {
+function LocationPicker({ onPickLocation }) {
   const [pickedLocation, setPickedLocation] = useState();
   const isFocused = useIsFocused();
 
@@ -23,13 +23,17 @@ function LocationPicker() {
     
     useEffect(() => {
       if(isFocused && route.params){
-      const mapPickedLocation = route.params && {
+      const mapPickedLocation = {
         lat: route.params.pickedLat,
         lng: route.params.pickedLng,
       };
       setPickedLocation(mapPickedLocation)
     }
   },[route, isFocused])
+
+  useEffect(() => {
+      onPickLocation(pickedLocation);
+  },[pickedLocation, onPickLocation]);
 
   async function verifyPermission() {
     if (
