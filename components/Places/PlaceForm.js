@@ -23,7 +23,7 @@ function PlaceForm() {
   }, []);
 
   function savePlaceHandler() {
-    console.log(enteredTitle, selectedImage, pickedLocation);
+    
   } 
 
   return (
