@@ -17,7 +17,7 @@ function PlacesList({ places }) {
     <FlatList
       style={styles.list}
       data={places}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => <PlaceItem place={item} />}
     />
   );
