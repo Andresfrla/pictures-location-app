@@ -55,3 +55,9 @@ export async function fetchPlaces() {
     console.log('SQLResultSet:', result);
     return result;
 }
+
+export async function fetchPlaceDetail(id) {
+    const database = await getDatabase();
+    const place = await database.getFirstAsync('SELECT * FROM places WHERE id = ?', [id]);
+    return place;
+}
